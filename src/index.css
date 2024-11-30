@@ -2,8 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-color-white: rgb(255, 255, 255);
+  --primary-color-maintheme: rgb(0, 97, 95);
+  --primary-color-secondarytheme: rgb(241, 165, 0);
+  --primary-color-secondarytheme-hover: rgb(230, 153, 0);
+  --secondary-color-light: rgb(249, 243, 240);
+  --highlight-color: rgb(255, 251, 155);
+  --btn-padding: 0.5rem 1rem;
+  --btn-border: 1px solid;
+  --secondary-color-text: rgb(102, 102, 102);
+}
+
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  font-family: "Poppins", sans-serif;
+}
+
+li {
+  list-style: none;
 }

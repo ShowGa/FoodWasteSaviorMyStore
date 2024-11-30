@@ -16,3 +16,10 @@ const Layout = () => {
 };
 
 export default Layout;
+
+/*
+
+=========== note ============
+1. Outlet set the container with with max-width: 100% and width: 100%
+
+*/
