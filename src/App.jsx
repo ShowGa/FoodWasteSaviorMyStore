@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Store from "./pages/Store";
+import Orders from "./pages/Orders";
 // layouts
 import Layout from "./layouts/Layout";
 
@@ -12,7 +13,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/store/:id" element={<Store />} />
+          <Route path="store/:id" element={<Store />} />
+          <Route path="store/:id/orders" element={<Orders />} />
         </Route>
 
         <Route path="/mystore-login" element={<Login />} />
