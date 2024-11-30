@@ -6,8 +6,8 @@ import SideBar from "../components/SideBar";
 
 const Layout = () => {
   return (
-    <main className="h-screen">
-      <div className="flex h-full">
+    <main className="min-h-screen">
+      <div className="flex h-auto">
         <SideBar />
         <Outlet />
       </div>

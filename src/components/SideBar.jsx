@@ -25,23 +25,25 @@ const SideBar = () => {
   const [activeTab, setActiveTab] = useState(items[0].title);
 
   return (
-    <div className="border-r-2 border-gray-200 px-2 w-[17rem] h-full">
-      <div className="flex justify-center items-center my-10">
-        <img src={img1} alt="logo" className="w-14 h-14 rounded-full" />
-      </div>
+    <div className="border-r-2 border-gray-200 px-2 w-[18rem] relative">
+      <div className="sticky top-0">
+        <div className="flex justify-center items-center py-10">
+          <img src={img1} alt="logo" className="w-14 h-14 rounded-full" />
+        </div>
 
-      <div className="flex flex-col">
-        <span className="ml-4 text-gray-400 text-sm font-semibold">
-          Store Navigation
-        </span>
-        {items.map((item, index) => (
-          <SideBarItem
-            key={index}
-            props={item}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-          />
-        ))}
+        <div className="flex flex-col">
+          <span className="ml-4 text-gray-400 text-sm font-semibold">
+            Store Navigation
+          </span>
+          {items.map((item, index) => (
+            <SideBarItem
+              key={index}
+              props={item}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
