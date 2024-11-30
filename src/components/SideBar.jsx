@@ -5,6 +5,7 @@ import { img1 } from "../assets";
 import SideBarItem from "./SideBarItem";
 // icons
 import { MdSpaceDashboard } from "react-icons/md";
+import { IoIosListBox } from "react-icons/io";
 
 // delete after connect to backend
 const items = [
@@ -15,8 +16,8 @@ const items = [
   },
   {
     to: "/store/2",
-    title: "Products",
-    icon: <MdSpaceDashboard className="text-2xl" />,
+    title: "Orders",
+    icon: <IoIosListBox className="text-2xl" />,
   },
 ];
 
