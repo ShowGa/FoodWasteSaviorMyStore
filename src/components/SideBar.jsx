@@ -26,7 +26,7 @@ const SideBar = () => {
 
   return (
     <div className="border-r-2 border-gray-200 px-2 w-[18rem] relative">
-      <div className="sticky top-0">
+      <div className="sticky top-0 min-h-screen">
         <div className="flex justify-center items-center py-10">
           <img src={img1} alt="logo" className="w-14 h-14 rounded-full" />
         </div>
