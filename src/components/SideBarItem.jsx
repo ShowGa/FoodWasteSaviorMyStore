@@ -1,6 +1,4 @@
 import React from "react";
-// react router dom
-import { Link } from "react-router-dom";
 
 const SideBarItem = ({ itemInfo, activeTab, setActiveTab }) => {
   return (
@@ -10,13 +8,10 @@ const SideBarItem = ({ itemInfo, activeTab, setActiveTab }) => {
       } hover:bg-gray-200 cursor-pointer`}
       onClick={() => setActiveTab(itemInfo.title)}
     >
-      <Link
-        to={`/store/${"123"}/${itemInfo.to}`}
-        className="flex items-center gap-2"
-      >
+      <div className="flex items-center gap-2">
         {itemInfo.icon}
         <span>{itemInfo.title}</span>
-      </Link>
+      </div>
     </li>
   );
 };

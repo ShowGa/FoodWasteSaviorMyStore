@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+// react router dom
+import { Link } from "react-router-dom";
 // assets
 import { img1 } from "../assets";
 // components
@@ -36,12 +38,14 @@ const SideBar = () => {
             Store Navigation
           </span>
           {items.map((item, index) => (
-            <SideBarItem
-              key={index}
-              itemInfo={item}
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
-            />
+            <Link to={`/store/${"123"}/${item.to}`}>
+              <SideBarItem
+                key={index}
+                itemInfo={item}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+              />
+            </Link>
           ))}
         </div>
       </div>
