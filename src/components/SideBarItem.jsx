@@ -2,17 +2,20 @@ import React from "react";
 // react router dom
 import { Link } from "react-router-dom";
 
-const SideBarItem = ({ props, activeTab, setActiveTab }) => {
+const SideBarItem = ({ itemInfo, activeTab, setActiveTab }) => {
   return (
     <li
       className={`rounded-md mt-1 py-[0.75rem] px-[1rem] w-full ${
-        activeTab === props.title ? "bg-gray-200 text-primary" : ""
+        activeTab === itemInfo.title ? "bg-gray-200 text-primary" : ""
       } hover:bg-gray-200 cursor-pointer`}
-      onClick={() => setActiveTab(props.title)}
+      onClick={() => setActiveTab(itemInfo.title)}
     >
-      <Link to={props.to} className="flex items-center gap-2">
-        {props.icon}
-        <span>{props.title}</span>
+      <Link
+        to={`/store/${"123"}/${itemInfo.to}`}
+        className="flex items-center gap-2"
+      >
+        {itemInfo.icon}
+        <span>{itemInfo.title}</span>
       </Link>
     </li>
   );

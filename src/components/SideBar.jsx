@@ -10,12 +10,12 @@ import { IoIosListBox } from "react-icons/io";
 // delete after connect to backend
 const items = [
   {
-    to: "/store/1",
+    to: "",
     title: "Dashboard",
     icon: <MdSpaceDashboard className="text-2xl" />,
   },
   {
-    to: "/store/2",
+    to: "orders",
     title: "Orders",
     icon: <IoIosListBox className="text-2xl" />,
   },
@@ -38,7 +38,7 @@ const SideBar = () => {
           {items.map((item, index) => (
             <SideBarItem
               key={index}
-              props={item}
+              itemInfo={item}
               activeTab={activeTab}
               setActiveTab={setActiveTab}
             />
