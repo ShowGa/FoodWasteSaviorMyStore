@@ -27,3 +27,7 @@ body {
 li {
   list-style: none;
 }
+
+svg {
+  margin: none;
+}
