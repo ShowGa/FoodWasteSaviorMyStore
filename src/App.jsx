@@ -14,7 +14,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="store/:id" element={<Store />} />
+          <Route path="store/:id/dashboard" element={<Store />} />
           <Route path="store/:id/orders" element={<Orders />} />
           <Route path="store/:id/orders/:orderId" element={<OrderDetail />} />
         </Route>

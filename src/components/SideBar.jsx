@@ -12,7 +12,7 @@ import { IoIosListBox } from "react-icons/io";
 // delete after connect to backend
 const items = [
   {
-    to: "",
+    to: "dashboard",
     title: "Dashboard",
     icon: <MdSpaceDashboard className="text-2xl" />,
   },
