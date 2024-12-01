@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Store from "./pages/Store";
 import Orders from "./pages/Orders";
+import OrderDetail from "./pages/OrderDetail";
 // layouts
 import Layout from "./layouts/Layout";
 
@@ -15,6 +16,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="store/:id" element={<Store />} />
           <Route path="store/:id/orders" element={<Orders />} />
+          <Route path="store/:id/orders/:orderId" element={<OrderDetail />} />
         </Route>
 
         <Route path="/mystore-login" element={<Login />} />
