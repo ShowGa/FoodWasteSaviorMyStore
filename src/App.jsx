@@ -19,10 +19,7 @@ function App() {
           <Route path="store/:id/orders" element={<Orders />} />
           <Route path="store/:id/orders/:orderId" element={<OrderDetail />} />
 
-          <Route
-            path="store/:id/product/:productId"
-            element={<Product />}
-          ></Route>
+          <Route path="store/:id/product/:productId" element={<Product />} />
         </Route>
 
         <Route path="/mystore-login" element={<Login />} />
