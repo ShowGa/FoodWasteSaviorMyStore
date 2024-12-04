@@ -12,7 +12,7 @@ const OrdersListCard = () => {
         <h3 className="text-primary text-lg font-semibold">756a5f2211s2f3</h3>
         <div className="flex flex-col mt-2">
           <p className="text-sm text-gray-500">Suprise Bag</p>
-          <p className="text-sm text-gray-500">11月30日 13:00 - 14:00</p>
+          <p className="text-sm text-gray-500">x 1</p>
         </div>
       </div>
     </div>
