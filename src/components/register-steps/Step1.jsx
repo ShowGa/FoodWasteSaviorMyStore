@@ -8,15 +8,27 @@ import useRegFormStore from "../../zustand/useRegFormStore";
 import MapService from "../../service/mapService";
 
 // list of address component
-const AddressList = () => {
+const AddressList = ({
+  result,
+  handleSelectSuggestion,
+  handleAddressReversedArray,
+}) => {
   return (
-    <li className="flex items-center gap-4 px-4 py-3">
+    <li
+      key={result.id}
+      className="flex items-center gap-4 px-4 py-3"
+      onClick={() => handleSelectSuggestion(result)}
+    >
       <div className="p-3 bg-gray-100 rounded-full">
         <FaShop className="text-lg text-black" />
       </div>
       <div className="leading-5">
-        <p>店面地址</p>
-        <p>台北市大安區</p>
+        <p>{result.text}</p>
+        <p>
+          {handleAddressReversedArray(
+            result.matching_place_name || result.place_name
+          )}
+        </p>
       </div>
     </li>
   );
@@ -32,8 +44,6 @@ const Step1 = () => {
   // zustand
   const { formData, setFormData } = useRegFormStore();
 
-  console.log(formData);
-
   // =========================== //
   //      Helper Function
   // =========================== //
@@ -45,7 +55,7 @@ const Step1 = () => {
     // check input value length
     if (inputValue.length < 2) {
       setResults([]);
-      console.log("input value length is less than 1");
+      clearTimeout(timeOutId.current);
       return;
     }
 
@@ -58,7 +68,6 @@ const Step1 = () => {
     timeOutId.current = setTimeout(() => {
       MapService.getCompleteLocation(encodeAddress)
         .then((response) => {
-          console.log(response.data.features);
           setResults(response.data.features);
         })
         .catch((error) => {
@@ -67,10 +76,44 @@ const Step1 = () => {
     }, 1000);
   };
 
-  const handleSelectSuggestion = (place) => {
-    setQuery(place.matching_place_name);
+  // for select suggestion use
+  const handleSelectSuggestion = (resultInfo) => {
+    // get reverse address array
+    const reverseAddressArray = handleAddressReversedArray(
+      resultInfo.matching_place_name || resultInfo.place_name
+    );
+
+    // extract address detail
+    const addressDetail = reverseAddressArray
+      .filter((_, index) => index !== 0 && index !== 3)
+      .join("");
+    const country = reverseAddressArray?.[0] || "";
+    const city = reverseAddressArray?.[1] || "";
+    const postalCode = reverseAddressArray?.[3] || undefined;
+
+    // show address in input
+    setQuery(addressDetail);
+
+    // clear suggestion list
     setResults([]);
-    console.log("Selected place:", place);
+
+    // set form data
+    setFormData({
+      ...formData,
+      addressDetail,
+      country,
+      city,
+      postalCode,
+      latitude: resultInfo.center[1],
+      longitude: resultInfo.center[0],
+    });
+  };
+
+  // address detail dealing => reverse the address => array
+  const handleAddressReversedArray = (address) => {
+    const reversedAddress = address.split(", ").reverse();
+
+    return reversedAddress;
   };
 
   return (
@@ -84,16 +127,24 @@ const Step1 = () => {
             {/* create a location icon */}
             <RiMapPin2Fill className="text-2xl text-black" />
             <input
+              value={query}
+              onChange={handleInputChangeAndSearch}
               className="flex-1 focus:outline-none"
               type="text"
-              placeholder="請輸入地址"
+              placeholder="範例:台北市信義區信義路五段"
             />
           </div>
-          <ul className="pt-4 rounded-b-2xl bg-white">
-            <AddressList />
-            <AddressList />
-            <AddressList />
-          </ul>
+          {results.length > 0 && (
+            <ul className="pt-4 rounded-b-2xl bg-white">
+              {results.map((result) => (
+                <AddressList
+                  result={result}
+                  handleSelectSuggestion={handleSelectSuggestion}
+                  handleAddressReversedArray={handleAddressReversedArray}
+                />
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </>
