@@ -14,12 +14,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Layout />}>
-          <Route path="store/:id/dashboard" element={<Store />} />
-          <Route path="store/:id/orders" element={<Orders />} />
-          <Route path="store/:id/orders/:orderId" element={<OrderDetail />} />
+        <Route path="store/:id" element={<Layout />}>
+          <Route path="dashboard" element={<Store />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="orders/:orderId" element={<OrderDetail />} />
 
-          <Route path="store/:id/product/:productId" element={<Product />} />
+          <Route path="product/:productId" element={<Product />} />
         </Route>
 
         <Route path="/mystore-login" element={<Login />} />

@@ -31,3 +31,12 @@
   border-radius: 8px;
   padding: 0.5rem;
 }
+
+/* ========= register page ========= */
+.register_form_container {
+  overflow-y: scroll;
+}
+/* make the scroll bar disappear */
+.register_form_container::-webkit-scrollbar {
+  display: none;
+}
