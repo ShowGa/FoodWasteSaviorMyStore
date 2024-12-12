@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 // react icon
 import { RiMapPin2Fill } from "react-icons/ri";
 import { FaShop } from "react-icons/fa6";
+// zustand
+import useRegFormStore from "../../zustand/useRegFormStore";
+// service
+import MapService from "../../service/mapService";
 
 // list of address component
-const AddressList = ({ formData, setFormData }) => {
+const AddressList = () => {
   return (
     <li className="flex items-center gap-4 px-4 py-3">
       <div className="p-3 bg-gray-100 rounded-full">
@@ -19,6 +23,56 @@ const AddressList = ({ formData, setFormData }) => {
 };
 
 const Step1 = () => {
+  // useState
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  // useRef
+  const timeOutId = useRef(null);
+
+  // zustand
+  const { formData, setFormData } = useRegFormStore();
+
+  console.log(formData);
+
+  // =========================== //
+  //      Helper Function
+  // =========================== //
+  const handleInputChangeAndSearch = (e) => {
+    const inputValue = e.target.value;
+    const encodeAddress = encodeURIComponent(inputValue);
+    setQuery(inputValue);
+
+    // check input value length
+    if (inputValue.length < 2) {
+      setResults([]);
+      console.log("input value length is less than 1");
+      return;
+    }
+
+    // clear timeout if it exists
+    if (timeOutId.current) {
+      clearTimeout(timeOutId.current);
+    }
+
+    // set timeout to fetch data
+    timeOutId.current = setTimeout(() => {
+      MapService.getCompleteLocation(encodeAddress)
+        .then((response) => {
+          console.log(response.data.features);
+          setResults(response.data.features);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }, 1000);
+  };
+
+  const handleSelectSuggestion = (place) => {
+    setQuery(place.matching_place_name);
+    setResults([]);
+    console.log("Selected place:", place);
+  };
+
   return (
     <>
       <h2 className="text-3xl">請告訴我們您的愛店大致位置</h2>

@@ -14,7 +14,6 @@ import "../pages/css/pageCss.css";
 
 const Register = () => {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({});
 
   const calculatePercentage = () => {
     return (step / 4) * 100;
@@ -46,18 +45,10 @@ const Register = () => {
         {/* Form Container */}
         <section className="flex justify-center items-center flex-1 h-full relative">
           <div className="register_form_container w-full max-w-[35rem] relative overflow-y-scroll">
-            {step === 1 && (
-              <Step1 formData={formData} setFormData={setFormData} />
-            )}
-            {step === 2 && (
-              <Step2 formData={formData} setFormData={setFormData} />
-            )}
-            {step === 3 && (
-              <Step3 formData={formData} setFormData={setFormData} />
-            )}
-            {step === 4 && (
-              <RegisterStep formData={formData} setFormData={setFormData} />
-            )}
+            {step === 1 && <Step1 />}
+            {step === 2 && <Step2 />}
+            {step === 3 && <Step3 />}
+            {step === 4 && <RegisterStep />}
           </div>
 
           <footer className="absolute bottom-0 left-0 w-full px-7 pb-7">
