@@ -1,6 +1,6 @@
 import React from "react";
 
-const Step3 = () => {
+const Step3 = ({ formData, setFormData }) => {
   return (
     <>
       <h2 className="text-3xl">請查看您的商店標記是否正確</h2>

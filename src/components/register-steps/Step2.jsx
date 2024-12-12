@@ -71,7 +71,7 @@ const customTextFieldBottom = {
   },
 };
 
-const Step2 = () => {
+const Step2 = ({ formData, setFormData }) => {
   return (
     <>
       <h2 className="text-3xl">請告訴我們您的愛店地址</h2>

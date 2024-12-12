@@ -4,7 +4,7 @@ import { RiMapPin2Fill } from "react-icons/ri";
 import { FaShop } from "react-icons/fa6";
 
 // list of address component
-const AddressList = ({ info }) => {
+const AddressList = ({ formData, setFormData }) => {
   return (
     <li className="flex items-center gap-4 px-4 py-3">
       <div className="p-3 bg-gray-100 rounded-full">
