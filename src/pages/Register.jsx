@@ -16,7 +16,7 @@ const Register = () => {
   const [step, setStep] = useState(1);
 
   const calculatePercentage = () => {
-    return (step / 4) * 100;
+    return (step / 3) * 100;
   };
 
   const handleNextStep = () => {
@@ -45,10 +45,10 @@ const Register = () => {
         {/* Form Container */}
         <section className="flex justify-center items-center flex-1 h-full relative">
           <div className="scroll-hidden w-full max-w-[35rem] relative overflow-y-scroll">
-            {step === 1 && <Step1 />}
-            {step === 2 && <Step2 />}
-            {step === 3 && <Step3 />}
-            {step === 4 && <RegisterStep />}
+            {/* {step === 1 && <Step1 />} */}
+            {step === 1 && <Step2 />}
+            {step === 2 && <Step3 />}
+            {step === 3 && <RegisterStep />}
           </div>
 
           <footer className="absolute bottom-0 left-0 w-full px-7 pb-7">
@@ -77,9 +77,9 @@ const Register = () => {
                 className="border border-gray-300 rounded-md px-4 py-2"
                 // forbid the button when step is 4
                 style={{
-                  cursor: step === 4 ? "not-allowed" : "pointer",
+                  cursor: step === 3 ? "not-allowed" : "pointer",
                 }}
-                disabled={step === 4}
+                disabled={step === 3}
                 onClick={handleNextStep}
               >
                 確認

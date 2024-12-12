@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 // mui
 import { TextField } from "@mui/material";
+// zustand
+import useRegFormStore from "../../zustand/useRegFormStore";
 
 // create a custom text field style
 const customTextFieldMiddle = {
@@ -72,18 +74,55 @@ const customTextFieldBottom = {
 };
 
 const Step2 = () => {
+  // zustand
+  const { formData, setFormData } = useRegFormStore();
+  // useState
+  const [addressInputValue, setAddressInputValue] = useState({
+    city: formData?.city || "",
+    town: formData?.town || "",
+    street: "",
+    floor: "",
+  });
+  console.log(addressInputValue);
+  console.log(formData);
+
+  // handle input change
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setAddressInputValue((prev) => ({ ...prev, [id]: value }));
+  };
+
   return (
     <>
       <h2 className="text-3xl">請告訴我們您的愛店地址</h2>
       <span className="text-md text-gray-400">透過地圖讓顧客快速找到您</span>
 
       <div className="w-full h-[25rem] rounded-2xl mt-10">
-        <form>
-          <TextField {...customTextFieldTop} label="郵遞區號" />
-          <TextField {...customTextFieldMiddle} label="縣市" />
-          <TextField {...customTextFieldMiddle} label="鄉鎮市區" />
-          <TextField {...customTextFieldMiddle} label="街道、巷弄" />
-          <TextField {...customTextFieldBottom} label="門牌號碼" />
+        <form onChange={handleInputChange}>
+          <TextField
+            {...customTextFieldTop}
+            id="postalCode"
+            label="郵遞區號"
+            defaultValue={formData?.postalCode}
+          />
+          <TextField
+            {...customTextFieldMiddle}
+            id="city"
+            label="縣市"
+            defaultValue={formData?.city}
+          />
+          <TextField
+            {...customTextFieldMiddle}
+            id="town"
+            label="鄉鎮市區"
+            defaultValue={formData?.town}
+          />
+          <TextField
+            {...customTextFieldMiddle}
+            id="street"
+            label="街道、巷弄、路段、號碼"
+          />
+          <TextField {...customTextFieldBottom} id="floor" label="樓層" />
         </form>
 
         {/* divider */}

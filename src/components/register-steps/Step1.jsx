@@ -57,7 +57,7 @@ const Step1 = () => {
   // =========================== //
   const handleInputChangeAndSearch = (e) => {
     const inputValue = e.target.value;
-    const encodeAddress = encodeURIComponent(inputValue);
+    // const encodeAddress = encodeURIComponent(inputValue);
     setQuery(inputValue);
 
     // check input value length
@@ -74,7 +74,7 @@ const Step1 = () => {
 
     // set timeout to fetch data
     timeOutId.current = setTimeout(() => {
-      MapService.getCompleteLocation(encodeAddress)
+      MapService.getCompleteLocation(inputValue)
         .then((response) => {
           setResults(response.data.features);
         })
@@ -97,6 +97,7 @@ const Step1 = () => {
       .join("");
     const country = reverseAddressArray?.[0] || "";
     const city = reverseAddressArray?.[1] || "";
+    const town = reverseAddressArray?.[2] || "";
     const postalCode = reverseAddressArray?.[3] || undefined;
 
     // show address in input
@@ -118,6 +119,7 @@ const Step1 = () => {
       addressDetail,
       country,
       city,
+      town,
       postalCode,
       latitude: resultInfo.center[1],
       longitude: resultInfo.center[0],
