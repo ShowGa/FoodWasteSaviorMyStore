@@ -6,6 +6,9 @@ import { FaShop } from "react-icons/fa6";
 import useRegFormStore from "../../zustand/useRegFormStore";
 // service
 import MapService from "../../service/mapService";
+// react map gl
+import Map, { Marker } from "react-map-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 // list of address component
 const AddressList = ({
@@ -16,7 +19,7 @@ const AddressList = ({
   return (
     <li
       key={result.id}
-      className="flex items-center gap-4 px-4 py-3"
+      className="flex items-center gap-4 px-4 py-3 cursor-pointer hover:bg-gray-100"
       onClick={() => handleSelectSuggestion(result)}
     >
       <div className="p-3 bg-gray-100 rounded-full">
@@ -35,14 +38,19 @@ const AddressList = ({
 };
 
 const Step1 = () => {
+  // zustand
+  const { formData, setFormData } = useRegFormStore();
+
   // useState
-  const [query, setQuery] = useState("");
+  const [viewState, setViewState] = useState({
+    longitude: formData?.longitude || 121.5654,
+    latitude: formData?.latitude || 25.033,
+    zoom: 14,
+  });
+  const [query, setQuery] = useState(formData?.addressDetail || "");
   const [results, setResults] = useState([]);
   // useRef
   const timeOutId = useRef(null);
-
-  // zustand
-  const { formData, setFormData } = useRegFormStore();
 
   // =========================== //
   //      Helper Function
@@ -94,6 +102,13 @@ const Step1 = () => {
     // show address in input
     setQuery(addressDetail);
 
+    // set view state
+    setViewState({
+      longitude: resultInfo.center[0],
+      latitude: resultInfo.center[1],
+      zoom: 14,
+    });
+
     // clear suggestion list
     setResults([]);
 
@@ -111,7 +126,9 @@ const Step1 = () => {
 
   // address detail dealing => reverse the address => array
   const handleAddressReversedArray = (address) => {
-    const reversedAddress = address.split(", ").reverse();
+    const reversedAddress = address.replace(/\s+/g, "").split(",").reverse();
+
+    console.log(reversedAddress);
 
     return reversedAddress;
   };
@@ -120,8 +137,25 @@ const Step1 = () => {
     <>
       <h2 className="text-3xl">請告訴我們您的愛店大致位置</h2>
       <span className="text-md text-gray-400">透過地圖讓顧客快速找到您</span>
-      <div className="w-full h-[25rem] bg-gray-200 rounded-2xl mt-10 relative">
-        <div>map</div>
+      <div className="w-full h-[25rem] bg-gray-200 rounded-2xl mt-10 overflow-hidden relative">
+        <Map
+          {...viewState}
+          onMove={(evt) => setViewState(evt.viewState)}
+          style={{ width: "100%", height: "100%" }}
+          mapStyle="mapbox://styles/mapbox/streets-v11"
+          mapboxAccessToken={import.meta.env.VITE_MAPBOX_API_KEY}
+        >
+          <Marker
+            longitude={formData?.longitude || 121.5654}
+            latitude={formData?.latitude || 25.033}
+            anchor="center"
+          >
+            <div style={{ color: "red" }}>
+              <RiMapPin2Fill className="text-4xl" />
+            </div>
+          </Marker>
+        </Map>
+
         <div className="mx-auto w-[90%] absolute top-[7%] left-0 right-0">
           <div className="px-4 py-5 h-full rounded-t-2xl flex items-center justify-center gap-2 bg-white">
             {/* create a location icon */}
@@ -131,11 +165,11 @@ const Step1 = () => {
               onChange={handleInputChangeAndSearch}
               className="flex-1 focus:outline-none"
               type="text"
-              placeholder="範例:台北市信義區信義路五段"
+              placeholder="範例 : 台北市信義區信義路五段7號"
             />
           </div>
           {results.length > 0 && (
-            <ul className="pt-4 rounded-b-2xl bg-white">
+            <ul className="custom-scrollbar pt-4 rounded-b-2xl max-h-[12rem] overflow-y-scroll bg-white">
               {results.map((result) => (
                 <AddressList
                   result={result}

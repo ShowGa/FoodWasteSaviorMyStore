@@ -89,9 +89,9 @@ const Step2 = () => {
         {/* divider */}
         <div className="w-full h-[1px] bg-gray-300 my-10"></div>
 
-        <div className="w-full h-[25rem] rounded-2xl mt-10 bg-gray-200">
+        {/* <div className="w-full h-[25rem] rounded-2xl mt-10 bg-gray-200">
           map
-        </div>
+        </div> */}
       </div>
     </>
   );

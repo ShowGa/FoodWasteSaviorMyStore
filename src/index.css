@@ -40,3 +40,26 @@ svg {
 .scroll-hidden::-webkit-scrollbar {
   display: none;
 }
+
+/* 設定滾動條的寬度 */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+/* 設定滾動條滑塊的樣式 */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 0.5rem;
+}
+
+/* 設定滾動條軌道的樣式 */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 0.5rem;
+}
+
+/* 可選：設定滾動條按鈕的樣式 */
+.custom-scrollbar::-webkit-scrollbar-button {
+  /* background-color: #ccc;
+  border-radius: 50%; */
+}

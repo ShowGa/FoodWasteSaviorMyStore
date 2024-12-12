@@ -11,7 +11,7 @@ class MapService {
       params: {
         access_token: MAP_API_KEY,
         autocomplete: true,
-        limit: 3,
+        limit: 6,
       },
     });
   }
