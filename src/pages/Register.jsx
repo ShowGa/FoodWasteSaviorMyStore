@@ -44,7 +44,7 @@ const Register = () => {
 
         {/* Form Container */}
         <section className="flex justify-center items-center flex-1 h-full relative">
-          <div className="register_form_container w-full max-w-[35rem] relative overflow-y-scroll">
+          <div className="scroll-hidden w-full max-w-[35rem] relative overflow-y-scroll">
             {step === 1 && <Step1 />}
             {step === 2 && <Step2 />}
             {step === 3 && <Step3 />}

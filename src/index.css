@@ -31,3 +31,12 @@ li {
 svg {
   margin: none;
 }
+
+/* ========== miscellaneous ========= */
+.scroll-hidden {
+  overflow-y: scroll;
+}
+/* make the scroll bar disappear */
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
+}
