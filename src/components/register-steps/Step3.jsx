@@ -10,7 +10,7 @@ import { FaShoppingBag } from "react-icons/fa";
 // css
 import "../css/component.css";
 
-const Step3 = () => {
+const Step3 = ({ setAllowNextStep }) => {
   const { formData, setFormData } = useRegFormStore();
   const [viewState, setViewState] = useState({
     longitude: formData.longitude ? formData.longitude : 121.5654,
@@ -33,6 +33,7 @@ const Step3 = () => {
           onMove={(evt) => {
             setViewState(evt.viewState);
             setOnMoving(true);
+            setAllowNextStep(true);
             setFormData({
               ...formData,
               longitude: evt.viewState.longitude,
