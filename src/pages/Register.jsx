@@ -14,6 +14,8 @@ import "../pages/css/pageCss.css";
 
 const Register = () => {
   const [step, setStep] = useState(1);
+  // allow next step or not
+  const [allowNextStep, setAllowNextStep] = useState(false);
 
   const calculatePercentage = () => {
     return (step / 3) * 100;
@@ -21,6 +23,7 @@ const Register = () => {
 
   const handleNextStep = () => {
     setStep(step + 1);
+    setAllowNextStep(false);
   };
   const handlePrevStep = () => {
     setStep(step - 1);
@@ -46,8 +49,18 @@ const Register = () => {
         <section className="flex justify-center items-center flex-1 h-full relative">
           <div className="scroll-hidden w-full max-w-[35rem] relative overflow-y-scroll">
             {/* {step === 1 && <Step1 />} */}
-            {step === 1 && <Step2 />}
-            {step === 2 && <Step3 />}
+            {step === 1 && (
+              <Step2
+                allowNextStep={allowNextStep}
+                setAllowNextStep={setAllowNextStep}
+              />
+            )}
+            {step === 2 && (
+              <Step3
+                allowNextStep={allowNextStep}
+                setAllowNextStep={setAllowNextStep}
+              />
+            )}
             {step === 3 && <RegisterStep />}
           </div>
 
@@ -77,9 +90,10 @@ const Register = () => {
                 className="border border-gray-300 rounded-md px-4 py-2"
                 // forbid the button when step is 4
                 style={{
-                  cursor: step === 3 ? "not-allowed" : "pointer",
+                  cursor:
+                    step === 3 || !allowNextStep ? "not-allowed" : "pointer",
                 }}
-                disabled={step === 3}
+                disabled={step === 3 || !allowNextStep}
                 onClick={handleNextStep}
               >
                 確認

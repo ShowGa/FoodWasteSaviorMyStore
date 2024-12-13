@@ -9,6 +9,8 @@ import OrderDetail from "./pages/OrderDetail";
 import Product from "./pages/Product";
 // layouts
 import Layout from "./layouts/Layout";
+// react-hot-toast
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/mystore-login" element={<Login />} />
         <Route path="/mystore-register" element={<Register />} />
       </Routes>
+
+      <Toaster />
     </BrowserRouter>
   );
 }
