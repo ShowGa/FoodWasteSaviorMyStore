@@ -1,0 +1,40 @@
+/* map pin icon */
+.map-pin-icon-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.map-pin-icon {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+/* map pin icon shadow */
+.map-pin-icon::before {
+  content: "";
+  position: absolute;
+  width: 2rem;
+  height: 1rem;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  z-index: -1;
+
+  transition: all 0.3s ease-in-out;
+}
+
+/* map pin icon animation effect */
+
+.map-pin-icon.icon-drag-effect::before {
+  /* bigger */
+  transform: translate(-50%, -50%) scale(150%);
+  background-color: rgba(247, 0, 0, 0.3);
+}
