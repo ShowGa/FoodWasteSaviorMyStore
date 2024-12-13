@@ -20,14 +20,3 @@
   height: 1px;
   background-color: #c0c0c0;
 }
-
-/* ========= OAuth button ========= */
-.p-OAuth_btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 0.5rem;
-}

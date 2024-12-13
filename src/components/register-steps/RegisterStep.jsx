@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 // react icon
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoApple } from "react-icons/io5";
+// component
+import GoogleOAuth from "../GoogleOAuth";
 
 const RegisterStep = () => {
   return (
@@ -21,11 +23,8 @@ const RegisterStep = () => {
 
         {/* OAuth */}
         <div className="flex flex-col gap-4">
-          <button className="p-OAuth_btn">
-            <FcGoogle className="text-xl" />
-            <span>Continue with Google</span>
-          </button>
-          <button className="p-OAuth_btn">
+          <GoogleOAuth />
+          <button className="c-OAuth_btn">
             <IoLogoApple className="text-2xl" />
             <span>Continue with Apple</span>
           </button>

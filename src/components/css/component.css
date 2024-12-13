@@ -1,3 +1,14 @@
+/* ========= OAuth button ========= */
+.c-OAuth_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
 /* map pin icon */
 .map-pin-icon-container {
   position: absolute;

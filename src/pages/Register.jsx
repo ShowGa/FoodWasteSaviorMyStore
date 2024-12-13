@@ -13,7 +13,7 @@ import "react-step-progress-bar/styles.css";
 import "../pages/css/pageCss.css";
 
 const Register = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
   // allow next step or not
   const [allowNextStep, setAllowNextStep] = useState(false);
 
