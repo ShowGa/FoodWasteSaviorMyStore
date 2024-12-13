@@ -199,9 +199,10 @@ const Step2 = ({ setAllowNextStep }) => {
           </button>
         </div>
 
-        <div className="w-full h-[25rem] rounded-2xl mt-5 bg-gray-200 pointer-events-none">
+        <div className="w-full h-[25rem] rounded-2xl mt-5 bg-gray-200 pointer-events-none overflow-hidden relative">
           <Map
             {...viewState}
+            onMove={(evt) => setViewState(evt.viewState)}
             style={{ width: "100%", height: "100%" }}
             mapStyle="mapbox://styles/mapbox/streets-v11"
             mapboxAccessToken={import.meta.env.VITE_MAPBOX_API_KEY}
