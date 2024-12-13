@@ -7,6 +7,11 @@ import useRegFormStore from "../../zustand/useRegFormStore";
 import MapService from "../../service/mapService";
 // react-hot-toast
 import toast from "react-hot-toast";
+// react map gl
+import Map, { Marker } from "react-map-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+// icons
+import { RiMapPin2Fill } from "react-icons/ri";
 
 // create a custom text field style
 const customTextFieldMiddle = {
@@ -88,6 +93,12 @@ const Step2 = ({ setAllowNextStep }) => {
     street: "",
     floor: "",
   });
+  const [viewState, setViewState] = useState({
+    longitude: formData.longitude ? formData.longitude : 121.5654,
+    latitude: formData.latitude ? formData.latitude : 25.033,
+    zoom: 14,
+  });
+
   // handle input change
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -124,6 +135,12 @@ const Step2 = ({ setAllowNextStep }) => {
           postalCode: addressInputValue.postalCode,
           latitude: mapData[0].center[1],
           longitude: mapData[0].center[0],
+        });
+        // set view state
+        setViewState({
+          ...viewState,
+          longitude: mapData[0].center[0],
+          latitude: mapData[0].center[1],
         });
         // allow next step after getting map data
         setAllowNextStep(true);
@@ -182,7 +199,24 @@ const Step2 = ({ setAllowNextStep }) => {
           </button>
         </div>
 
-        <div className="w-full h-[25rem] rounded-2xl mt-5 bg-gray-200">map</div>
+        <div className="w-full h-[25rem] rounded-2xl mt-5 bg-gray-200 pointer-events-none">
+          <Map
+            {...viewState}
+            style={{ width: "100%", height: "100%" }}
+            mapStyle="mapbox://styles/mapbox/streets-v11"
+            mapboxAccessToken={import.meta.env.VITE_MAPBOX_API_KEY}
+          >
+            <Marker
+              longitude={formData.longitude ? formData.longitude : 121.5654}
+              latitude={formData.latitude ? formData.latitude : 25.033}
+              anchor="center"
+            >
+              <div style={{ color: "red" }}>
+                <RiMapPin2Fill className="text-4xl" />
+              </div>
+            </Marker>
+          </Map>
+        </div>
       </div>
     </>
   );
