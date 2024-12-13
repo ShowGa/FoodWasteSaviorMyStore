@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // mui
 import { TextField } from "@mui/material";
 // zustand
 import useRegFormStore from "../../zustand/useRegFormStore";
+// MapService
+import MapService from "../../service/MapService";
 
 // create a custom text field style
 const customTextFieldMiddle = {
@@ -78,8 +80,9 @@ const Step2 = () => {
   const { formData, setFormData } = useRegFormStore();
   // useState
   const [addressInputValue, setAddressInputValue] = useState({
-    city: formData?.city || "",
-    town: formData?.town || "",
+    postalCode: undefined,
+    city: "",
+    town: "",
     street: "",
     floor: "",
   });
@@ -90,6 +93,34 @@ const Step2 = () => {
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setAddressInputValue((prev) => ({ ...prev, [id]: value }));
+  };
+
+  // ============= helper function ============= //
+  const handleMapClick = () => {
+    const address = `${addressInputValue.postalCode}${addressInputValue.city}${addressInputValue.town}${addressInputValue.street}`;
+
+    const addressForFormData = `${addressInputValue.city}${addressInputValue.town}${addressInputValue.street}${addressInputValue.floor}`;
+
+    MapService.getCompleteLocation(address)
+      .then((res) => {
+        const mapData = res.data.features;
+        console.log("fetch successfully");
+        console.log(mapData);
+        // set map data to formData
+        setFormData({
+          ...formData,
+          addressDetail: addressForFormData,
+          country: "台灣",
+          city: addressInputValue.city,
+          postalCode: addressInputValue.postalCode,
+          latitude: mapData[0].center[1],
+          longitude: mapData[0].center[0],
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        // react-hot-toast
+      });
   };
 
   return (
@@ -103,20 +134,10 @@ const Step2 = () => {
             {...customTextFieldTop}
             id="postalCode"
             label="郵遞區號"
-            defaultValue={formData?.postalCode}
+            type="number"
           />
-          <TextField
-            {...customTextFieldMiddle}
-            id="city"
-            label="縣市"
-            defaultValue={formData?.city}
-          />
-          <TextField
-            {...customTextFieldMiddle}
-            id="town"
-            label="鄉鎮市區"
-            defaultValue={formData?.town}
-          />
+          <TextField {...customTextFieldMiddle} id="city" label="縣市" />
+          <TextField {...customTextFieldMiddle} id="town" label="鄉鎮市區" />
           <TextField
             {...customTextFieldMiddle}
             id="street"
@@ -128,9 +149,17 @@ const Step2 = () => {
         {/* divider */}
         <div className="w-full h-[1px] bg-gray-300 my-10"></div>
 
-        {/* <div className="w-full h-[25rem] rounded-2xl mt-10 bg-gray-200">
-          map
-        </div> */}
+        {/* button */}
+        <div className="flex justify-center">
+          <button
+            className="rounded-md w-[50%] h-10 text-white bg-secondaryTheme hover:bg-secondaryThemeHover"
+            onClick={handleMapClick}
+          >
+            點擊地圖定位
+          </button>
+        </div>
+
+        <div className="w-full h-[25rem] rounded-2xl mt-5 bg-gray-200">map</div>
       </div>
     </>
   );
