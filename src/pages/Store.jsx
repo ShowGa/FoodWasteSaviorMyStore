@@ -3,9 +3,28 @@ import React, { useState } from "react";
 import PackageCard from "../components/PackageCard";
 // react icons
 import { FaCirclePlus } from "react-icons/fa6";
+// service
+import PackageService from "../service/packageService";
+// toast
+import toast from "react-hot-toast";
 
 const Store = () => {
   const [packageCards, setPackageCards] = useState([]);
+
+  const handleCreatePackage = () => {
+    PackageService.createPackage()
+      .then((res) => {
+        setPackageCards([...packageCards, res.data.data]);
+        toast.success("新增商品成功，請修改商品資訊");
+      })
+      .catch((err) => {
+        const message =
+          err.response?.data.message ||
+          "糟糕!伺服器似乎出現了問題，請聯絡客服。";
+        toast.error(message);
+        console.log(err);
+      });
+  };
 
   return (
     <section className="w-full">
@@ -24,7 +43,10 @@ const Store = () => {
                   <p className="text-gray-500">
                     還沒有任何商品喔!趕快來新增一個吧!
                   </p>
-                  <button className="flex items-center gap-2 text-secondaryTheme hover:text-secondaryThemeHover transition-all duration-300">
+                  <button
+                    onClick={handleCreatePackage}
+                    className="flex items-center gap-2 text-secondaryTheme hover:text-secondaryThemeHover transition-all duration-300"
+                  >
                     <FaCirclePlus className="text-4xl" />
                   </button>
                 </div>
