@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // components
 import PackageCard from "../components/PackageCard";
 // react icons
@@ -10,6 +10,22 @@ import toast from "react-hot-toast";
 
 const Store = () => {
   const [packageCards, setPackageCards] = useState([]);
+  console.log(packageCards);
+
+  const handleGetPackageList = () => {
+    PackageService.getPackageList()
+      .then((res) => {
+        setPackageCards(res.data.data);
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        const message =
+          err.response?.data.message ||
+          "糟糕!伺服器似乎出現了問題，請聯絡客服。";
+        toast.error(message);
+        console.log(err);
+      });
+  };
 
   const handleCreatePackage = () => {
     PackageService.createPackage()
@@ -25,6 +41,10 @@ const Store = () => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    handleGetPackageList();
+  }, []);
 
   return (
     <section className="w-full">
@@ -54,7 +74,9 @@ const Store = () => {
             )}
 
             {packageCards.length > 0 &&
-              packageCards.map((card) => <PackageCard key={card.id} />)}
+              packageCards.map((packageCard) => (
+                <PackageCard packageCard={packageCard} />
+              ))}
           </div>
         </div>
       </div>
