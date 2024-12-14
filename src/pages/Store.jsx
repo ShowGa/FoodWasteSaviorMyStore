@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 // components
 import PackageCard from "../components/PackageCard";
+// react icons
+import { FaCirclePlus } from "react-icons/fa6";
 
 const Store = () => {
+  const [packageCards, setPackageCards] = useState([]);
+
   return (
     <section className="w-full">
       <div className="px-28 py-20">
@@ -14,7 +18,21 @@ const Store = () => {
           </h2>
 
           <div className="pb-6 px-6">
-            <PackageCard />
+            {packageCards.length === 0 && (
+              <>
+                <div className="border border-gray-200 rounded-md p-4 max-w-[20rem] h-[15rem] flex flex-col items-center justify-center gap-4">
+                  <p className="text-gray-500">
+                    還沒有任何商品喔!趕快來新增一個吧!
+                  </p>
+                  <button className="flex items-center gap-2 text-secondaryTheme hover:text-secondaryThemeHover transition-all duration-300">
+                    <FaCirclePlus className="text-4xl" />
+                  </button>
+                </div>
+              </>
+            )}
+
+            {packageCards.length > 0 &&
+              packageCards.map((card) => <PackageCard key={card.id} />)}
           </div>
         </div>
       </div>
