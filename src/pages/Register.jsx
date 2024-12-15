@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+// react router dom
+import { Navigate } from "react-router-dom";
+// zustand
+import useAuthStore from "../zustand/useAuthStore";
 // images
 import { img3 } from "../assets";
 // components
-import Step1 from "../components/register-steps/Step1";
 import Step2 from "../components/register-steps/Step2";
 import Step3 from "../components/register-steps/Step3";
 import RegisterStep from "../components/register-steps/RegisterStep";
@@ -13,6 +16,12 @@ import "react-step-progress-bar/styles.css";
 import "../pages/css/pageCss.css";
 
 const Register = () => {
+  // check if user is logged in
+  const { authStore } = useAuthStore();
+  if (authStore) {
+    return <Navigate to={`/store/${authStore.storeId}/dashboard`} />;
+  }
+
   const [step, setStep] = useState(1);
   // allow next step or not
   const [allowNextStep, setAllowNextStep] = useState(false);

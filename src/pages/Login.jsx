@@ -1,6 +1,8 @@
 import React from "react";
 // react router dom
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+// zustand
+import useAuthStore from "../zustand/useAuthStore";
 // assets
 import { img3 } from "../assets";
 // icons
@@ -10,6 +12,12 @@ import { IoLogoApple } from "react-icons/io";
 import "../pages/css/pageCss.css";
 
 const Login = () => {
+  // check if user is logged in
+  const { authStore } = useAuthStore();
+  if (authStore) {
+    return <Navigate to={`/store/${authStore.storeId}/dashboard`} />;
+  }
+
   return (
     <div>
       {/* logo */}
