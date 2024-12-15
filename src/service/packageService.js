@@ -54,6 +54,20 @@ class PackageService {
       },
     });
   }
+
+  updatePackageOverview(packageId, formData) {
+    const token = JSON.parse(localStorage.getItem("auth-mystore-jwt"));
+
+    return axios.post(
+      API_URL + `/updatepackageoverview/${packageId}`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  }
 }
 
 export default new PackageService();

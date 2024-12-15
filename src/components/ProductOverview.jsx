@@ -41,7 +41,7 @@ const ProductOverview = () => {
       });
   };
 
-  const handleSubmitFormData = (e) => {
+  const handleUpdateSubmitFormData = (e) => {
     e.preventDefault();
 
     if (!checkFormDataIsChanged()) {
@@ -49,9 +49,24 @@ const ProductOverview = () => {
       return;
     }
 
-    // setEditing(false);
-    setEditing(false);
-    toast.success("更新成功");
+    // take out packageId from formData
+    const { packageId, ...formDataWithoutPackageId } = formData;
+
+    PackageService.updatePackageOverview(packageId, formDataWithoutPackageId)
+      .then((res) => {
+        const responseData = res.data.data;
+        setPostedFormData(responseData);
+        setFormData(responseData);
+        setEditing(false);
+        toast.success("更新成功");
+      })
+      .catch((err) => {
+        const message =
+          err.response?.data.message ||
+          "糟糕!伺服器似乎出現了問題，請聯絡客服。";
+        toast.error(message);
+        console.log(err);
+      });
   };
 
   const handleEdit = () => {
@@ -115,7 +130,10 @@ const ProductOverview = () => {
           </button>
         </div>
 
-        <form className="flex flex-col gap-8" onSubmit={handleSubmitFormData}>
+        <form
+          className="flex flex-col gap-8"
+          onSubmit={handleUpdateSubmitFormData}
+        >
           <div className="">
             <p className=" text-gray-500">商品名稱</p>
             {editing ? (
@@ -160,7 +178,7 @@ const ProductOverview = () => {
                 <MenuItem value="MEALS" className="text-gray-500">
                   正餐
                 </MenuItem>
-                <MenuItem value="BACKERY" className="text-gray-500">
+                <MenuItem value="BAKERY" className="text-gray-500">
                   烘焙食品
                 </MenuItem>
                 <MenuItem value="GROCERY" className="text-gray-500">
