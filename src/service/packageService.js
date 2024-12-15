@@ -28,7 +28,7 @@ class PackageService {
   getPackageDetail(packageId) {
     const token = JSON.parse(localStorage.getItem("auth-mystore-jwt"));
 
-    return axios.get(API_URL + `/packagefetailfull/${packageId}`, {
+    return axios.get(API_URL + `/packagedetailfull/${packageId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

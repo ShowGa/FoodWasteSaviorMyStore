@@ -1,36 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+// react-router-dom
+import { useParams } from "react-router-dom";
 // assets
 import { img1, img2 } from "../assets";
 // mui
 import { Select, MenuItem } from "@mui/material";
 // toast
 import toast from "react-hot-toast";
+// service
+import PackageService from "../service/packageService";
+// utils
+import { categoryConvertor } from "../utils/categoryConvertor";
 
-const ProductOverview = ({ postedFormData, setFormData, formData }) => {
+const ProductOverview = () => {
+  const { packageId } = useParams();
+
   const [editing, setEditing] = useState(false);
   // Overview => get posted form data from backend
-  const [postedFormData, setPostedFormData] = useState({
-    packageName: "Marry的甜甜圈驚喜包",
-    packageDescription: "Lorem",
-    packageCategory: "BACKERY",
-    packageAllergensDesc: "Lorem",
-    originPrice: 150,
-    discountPrice: 150,
-  });
+  const [postedFormData, setPostedFormData] = useState({});
   // change this later
   // Overview => get form data from backend at first
-  const [formData, setFormData] = useState({
-    packageName: "Marry的甜甜圈驚喜包",
-    packageDescription: "Lorem",
-    packageCategory: "BACKERY",
-    packageAllergensDesc: "Lorem",
-    originPrice: 150,
-    discountPrice: 150,
-  });
+  const [formData, setFormData] = useState({});
 
   // =================== //
   // Helper function
   // =================== //
+  const handleGetPackageOverview = async () => {
+    PackageService.getPackageOverview(packageId)
+      .then((res) => {
+        const responseData = res.data.data;
+        setPostedFormData(responseData);
+        setFormData(responseData);
+      })
+      .catch((err) => {
+        const message =
+          err.response?.data.message ||
+          "糟糕!伺服器似乎出現了問題，請聯絡客服。";
+        toast.error(message);
+        console.log(err);
+      });
+  };
 
   const handleSubmitFormData = (e) => {
     e.preventDefault();
@@ -73,6 +82,10 @@ const ProductOverview = ({ postedFormData, setFormData, formData }) => {
     }
     return true;
   };
+
+  useEffect(() => {
+    handleGetPackageOverview();
+  }, []);
 
   return (
     <div className="flex flex-col gap-4 mt-10 border border-gray-200 rounded-lg">
@@ -158,7 +171,7 @@ const ProductOverview = ({ postedFormData, setFormData, formData }) => {
                 </MenuItem>
               </Select>
             ) : (
-              <span>{postedFormData.packageCategory}</span>
+              <span>{categoryConvertor(postedFormData.packageCategory)}</span>
             )}
           </div>
 
@@ -179,17 +192,18 @@ const ProductOverview = ({ postedFormData, setFormData, formData }) => {
           {/* show when editing = true */}
           {editing && (
             <div>
-              {/* select with mui , item value = 50, 100, 150, 200,  */}
+              <p className=" text-gray-500">折價 - 原價</p>
+              {/* select with mui , item value = 50, 100, 150, 200, */}
               <Select
                 name="price"
                 value={formData.discountPrice}
                 className="w-full"
                 onChange={handleInputChange}
               >
-                <MenuItem value="50">50</MenuItem>
-                <MenuItem value="100">100</MenuItem>
-                <MenuItem value="150">150</MenuItem>
-                <MenuItem value="200">200</MenuItem>
+                <MenuItem value="50">50 - 100</MenuItem>
+                <MenuItem value="100">100 - 200</MenuItem>
+                <MenuItem value="150">150 - 300</MenuItem>
+                <MenuItem value="200">200 - 400</MenuItem>
               </Select>
             </div>
           )}
@@ -203,7 +217,7 @@ const ProductOverview = ({ postedFormData, setFormData, formData }) => {
               </div>
 
               <div className="">
-                <p className=" text-gray-500">驚喜價</p>
+                <p className=" text-gray-500">折價</p>
                 <span>NT$ {postedFormData.discountPrice}</span>
               </div>
             </>
