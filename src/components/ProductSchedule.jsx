@@ -14,6 +14,9 @@ const dateInWeek = [
 ];
 
 const ProductSchedule = () => {
+  // Schedule => get posted form data from backend
+  const [postedScheduleFormData, setPostedScheduleFormData] = useState([]);
+
   return (
     <div className="flex flex-col gap-4 mt-10 border border-gray-200 rounded-lg">
       <div className="border-b border-gray-200 px-6 pt-6 pb-4">

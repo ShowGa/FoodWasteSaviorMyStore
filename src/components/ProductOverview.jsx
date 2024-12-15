@@ -6,9 +6,9 @@ import { Select, MenuItem } from "@mui/material";
 // toast
 import toast from "react-hot-toast";
 
-const ProductOverview = () => {
+const ProductOverview = ({ postedFormData, setFormData, formData }) => {
   const [editing, setEditing] = useState(false);
-  // get posted form data from backend
+  // Overview => get posted form data from backend
   const [postedFormData, setPostedFormData] = useState({
     packageName: "Marry的甜甜圈驚喜包",
     packageDescription: "Lorem",
@@ -18,7 +18,7 @@ const ProductOverview = () => {
     discountPrice: 150,
   });
   // change this later
-  // get form data from backend at first
+  // Overview => get form data from backend at first
   const [formData, setFormData] = useState({
     packageName: "Marry的甜甜圈驚喜包",
     packageDescription: "Lorem",
@@ -31,13 +31,6 @@ const ProductOverview = () => {
   // =================== //
   // Helper function
   // =================== //
-  const handleEdit = () => {
-    // check if formData === postedFormData
-    if (checkFormDataIsChanged()) {
-      setFormData(postedFormData);
-    }
-    setEditing(!editing);
-  };
 
   const handleSubmitFormData = (e) => {
     e.preventDefault();
@@ -50,6 +43,14 @@ const ProductOverview = () => {
     // setEditing(false);
     setEditing(false);
     toast.success("更新成功");
+  };
+
+  const handleEdit = () => {
+    // check if formData === postedFormData
+    if (checkFormDataIsChanged()) {
+      setFormData(postedFormData);
+    }
+    setEditing(!editing);
   };
 
   const handleInputChange = (e) => {

@@ -23,6 +23,37 @@ class PackageService {
       },
     });
   }
+
+  // get package detail full (Overview, Schedule)
+  getPackageDetail(packageId) {
+    const token = JSON.parse(localStorage.getItem("auth-mystore-jwt"));
+
+    return axios.get(API_URL + `/packagefetailfull/${packageId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  getPackageSchedule(packageId) {
+    const token = JSON.parse(localStorage.getItem("auth-mystore-jwt"));
+
+    return axios.get(API_URL + `/packageschedule/${packageId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  getPackageOverview(packageId) {
+    const token = JSON.parse(localStorage.getItem("auth-mystore-jwt"));
+
+    return axios.get(API_URL + `/packageoverview/${packageId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }
 
 export default new PackageService();
