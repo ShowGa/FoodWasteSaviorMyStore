@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // zustand
 import useRegFormStore from "../../zustand/useRegFormStore";
 // react map gl
@@ -22,6 +22,14 @@ const Step3 = ({ setAllowNextStep }) => {
 
   // ============= helper function ============= //
 
+  useEffect(() => {
+    setAllowNextStep(true);
+
+    return () => {
+      setAllowNextStep(false);
+    };
+  }, []);
+
   return (
     <>
       <h2 className="text-3xl">請查看您的商店標記是否正確</h2>
@@ -33,7 +41,6 @@ const Step3 = ({ setAllowNextStep }) => {
           onMove={(evt) => {
             setViewState(evt.viewState);
             setOnMoving(true);
-            setAllowNextStep(true);
             setFormData({
               ...formData,
               longitude: evt.viewState.longitude,

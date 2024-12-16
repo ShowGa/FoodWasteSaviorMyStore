@@ -83,6 +83,7 @@ const customTextFieldBottom = {
 };
 
 const Step2 = ({ setAllowNextStep }) => {
+  const [isChangeAddress, setIsChangeAddress] = useState(false);
   // zustand
   const { formData, setFormData } = useRegFormStore();
   // useState
@@ -103,10 +104,17 @@ const Step2 = ({ setAllowNextStep }) => {
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setAddressInputValue((prev) => ({ ...prev, [id]: value }));
+    setIsChangeAddress(true);
   };
 
   // ============= helper function ============= //
   const handleMapClick = () => {
+    // check if address input value is changed
+    if (!isChangeAddress) {
+      toast.error("請先填寫或更改地址!");
+      return;
+    }
+
     const { postalCode, city, town, street } = addressInputValue;
     if (!postalCode || !city || !town || !street) {
       // react-hot-toast
@@ -144,6 +152,7 @@ const Step2 = ({ setAllowNextStep }) => {
         });
         // allow next step after getting map data
         setAllowNextStep(true);
+        setIsChangeAddress(false);
       })
       .catch((err) => {
         console.log(err);
