@@ -43,6 +43,7 @@ const switchStyle = {
 const ProductScheduleFilter = ({ weekday, schedule, setPostedSchedules }) => {
   const [isChanged, setIsChanged] = useState(false);
   const [formData, setFormData] = useState(schedule);
+  console.log(isChanged);
 
   // ======================= //
   // Helper Functions
@@ -149,7 +150,7 @@ const ProductScheduleFilter = ({ weekday, schedule, setPostedSchedules }) => {
         </div>
 
         <button
-          className={`bg-secondaryThemeHover text-white font-semibold px-4 py-2 rounded-md ${
+          className={`text-white font-semibold px-4 py-2 rounded-md ${
             isChanged ? "bg-secondaryThemeHover" : "bg-gray-300"
           }`}
           onClick={handleUpdateSubmit}
