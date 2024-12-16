@@ -8,6 +8,14 @@ class AuthService {
       withCredentials: true,
     });
   }
+
+  firebaseGoogleOAuthLogin(idToken) {
+    return axios.get(API_URL + "/googleoauth-login", {
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    });
+  }
 }
 
 export default new AuthService();

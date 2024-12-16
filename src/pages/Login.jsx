@@ -10,6 +10,8 @@ import { FcGoogle } from "react-icons/fc";
 import { IoLogoApple } from "react-icons/io";
 // css
 import "../pages/css/pageCss.css";
+// components
+import GoogleOAuthLogin from "../components/GoogleOAuthLogin";
 
 const Login = () => {
   // check if user is logged in
@@ -49,13 +51,10 @@ const Login = () => {
 
             {/* OAuth */}
             <div className="flex flex-col gap-4">
-              <button className="p-OAuth_btn">
-                <FcGoogle className="text-xl" />
-                <span>Continue with Google</span>
-              </button>
-              <button className="p-OAuth_btn">
+              <GoogleOAuthLogin />
+              <button className="c-OAuth_btn">
                 <IoLogoApple className="text-2xl" />
-                <span>Continue with Apple</span>
+                <span>使用 Apple 登入</span>
               </button>
             </div>
 
