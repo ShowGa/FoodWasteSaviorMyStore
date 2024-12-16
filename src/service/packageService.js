@@ -70,10 +70,10 @@ class PackageService {
   }
 
   // update package schedule
-  updatePackageSchedule(packageId, formData) {
+  updatePackageSchedule(rulesId, formData) {
     const token = JSON.parse(localStorage.getItem("auth-mystore-jwt"));
 
-    return axios.post(API_URL + `/updateschedule/${packageId}`, formData, {
+    return axios.post(API_URL + `/updatepackageschedule/${rulesId}`, formData, {
       headers: { Authorization: `Bearer ${token}` },
     });
   }

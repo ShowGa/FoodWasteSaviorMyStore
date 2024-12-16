@@ -64,6 +64,7 @@ const ProductSchedule = () => {
             key={schedule.rulesId}
             schedule={schedule}
             weekday={dateInWeek[schedule.weekday]}
+            setPostedSchedules={setPostedSchedules}
           />
         ))}
       </div>
