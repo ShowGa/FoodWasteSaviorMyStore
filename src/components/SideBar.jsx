@@ -5,9 +5,12 @@ import { Link } from "react-router-dom";
 import { img1 } from "../assets";
 // components
 import SideBarItem from "./SideBarItem";
+import SideBarLogoutButton from "./SideBarLogoutButton";
 // icons
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoIosListBox } from "react-icons/io";
+// zustand
+import useAuthStore from "../zustand/useAuthStore";
 
 // delete after connect to backend
 const items = [
@@ -24,6 +27,8 @@ const items = [
 ];
 
 const SideBar = () => {
+  const { authStore } = useAuthStore();
+
   const [activeTab, setActiveTab] = useState(items[0].title);
 
   return (
@@ -33,20 +38,31 @@ const SideBar = () => {
           <img src={img1} alt="logo" className="w-14 h-14 rounded-full" />
         </div>
 
-        <div className="flex flex-col">
-          <span className="ml-4 text-gray-400 text-sm font-semibold">
-            Store Navigation
-          </span>
-          {items.map((item, index) => (
-            <Link to={`/store/${"123"}/${item.to}`}>
-              <SideBarItem
-                key={index}
-                itemInfo={item}
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-              />
-            </Link>
-          ))}
+        <div className="flex flex-col gap-6">
+          <div>
+            <span className="ml-4 text-gray-400 text-sm font-semibold">
+              導覽列
+            </span>
+            {items.map((item, index) => (
+              <Link to={`/store/${authStore.storeId}/${item.to}`}>
+                <SideBarItem
+                  key={index}
+                  itemInfo={item}
+                  activeTab={activeTab}
+                  setActiveTab={setActiveTab}
+                />
+              </Link>
+            ))}
+          </div>
+
+          <div>
+            <span className="ml-4 text-gray-400 text-sm font-semibold">
+              功能鍵
+            </span>
+            <ul>
+              <SideBarLogoutButton />
+            </ul>
+          </div>
         </div>
       </div>
     </div>
