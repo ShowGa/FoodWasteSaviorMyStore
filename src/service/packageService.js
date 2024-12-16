@@ -68,6 +68,15 @@ class PackageService {
       }
     );
   }
+
+  // update package schedule
+  updatePackageSchedule(packageId, formData) {
+    const token = JSON.parse(localStorage.getItem("auth-mystore-jwt"));
+
+    return axios.post(API_URL + `/updateschedule/${packageId}`, formData, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
 }
 
 export default new PackageService();
