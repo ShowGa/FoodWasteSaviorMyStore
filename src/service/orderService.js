@@ -12,6 +12,20 @@ class OrderService {
       },
     });
   }
+
+  confirmOrder(orderId) {
+    const token = JSON.parse(localStorage.getItem("auth-mystore-jwt"));
+
+    return axios.patch(
+      API_URL + `/accepttheorder/${orderId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  }
 }
 
 export default new OrderService();

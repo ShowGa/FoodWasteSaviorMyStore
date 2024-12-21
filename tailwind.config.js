@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         primary: "var(--primary-color-maintheme)",
+        primaryHover: "var(--primary-color-maintheme-hover)",
         secondary: "var(--secondary-color-light)",
         highlight: "var(--highlight-color)",
         secondaryText: "var(--secondary-color-text)",
