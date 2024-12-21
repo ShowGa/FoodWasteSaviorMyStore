@@ -9,6 +9,8 @@ import SideBarLogoutButton from "./SideBarLogoutButton";
 // icons
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoIosListBox } from "react-icons/io";
+import { MdPending } from "react-icons/md";
+
 // zustand
 import useAuthStore from "../zustand/useAuthStore";
 
@@ -16,13 +18,18 @@ import useAuthStore from "../zustand/useAuthStore";
 const items = [
   {
     to: "dashboard",
-    title: "Dashboard",
+    title: "總覽",
     icon: <MdSpaceDashboard className="text-2xl" />,
   },
   {
     to: "orders",
-    title: "Orders",
+    title: "已確認訂單",
     icon: <IoIosListBox className="text-2xl" />,
+  },
+  {
+    to: "orders/pending",
+    title: "待確認訂單",
+    icon: <MdPending className="text-2xl" />,
   },
 ];
 
