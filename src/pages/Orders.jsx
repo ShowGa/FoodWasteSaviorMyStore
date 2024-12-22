@@ -1,8 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // components
 import OrdersListCard from "../components/OrdersListCard";
+// service
+import OrderService from "../service/orderService";
 
 const Orders = () => {
+  const [confirmedOrderList, setConfirmedOrderList] = useState([]);
+
+  const getConfirmedOrderList = () => {
+    OrderService.getConfirmedOrderList()
+      .then((res) => {
+        setConfirmedOrderList(res.data.data);
+      })
+      .catch((err) => {
+        const message =
+          err.response?.data.message ||
+          "糟糕!伺服器似乎出現了問題，請聯絡客服。";
+        toast.error(message);
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getConfirmedOrderList();
+  }, []);
+
   return (
     <section className="w-full">
       <div className="px-28 py-20">
@@ -14,14 +36,13 @@ const Orders = () => {
           </h2>
 
           <div className="flex flex-wrap gap-4 pb-6 px-6">
-            <OrdersListCard />
-            <OrdersListCard />
-            <OrdersListCard />
-            <OrdersListCard />
-            <OrdersListCard />
-            <OrdersListCard />
-            <OrdersListCard />
-            <OrdersListCard />
+            {confirmedOrderList.length > 0 ? (
+              confirmedOrderList.map((order) => (
+                <OrdersListCard key={order.id} order={order} />
+              ))
+            ) : (
+              <p className="text-center text-gray-500">目前沒有任何訂單</p>
+            )}
           </div>
         </div>
       </div>

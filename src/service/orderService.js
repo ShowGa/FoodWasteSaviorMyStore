@@ -26,6 +26,16 @@ class OrderService {
       }
     );
   }
+
+  getConfirmedOrderList() {
+    const token = JSON.parse(localStorage.getItem("auth-mystore-jwt"));
+
+    return axios.get(API_URL + "/getconfirmedorderlist", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }
 
 export default new OrderService();
