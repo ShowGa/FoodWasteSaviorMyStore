@@ -10,7 +10,6 @@ import toast from "react-hot-toast";
 
 const Store = () => {
   const [packageCards, setPackageCards] = useState([]);
-  console.log(packageCards);
 
   const handleGetPackageList = () => {
     PackageService.getPackageList()

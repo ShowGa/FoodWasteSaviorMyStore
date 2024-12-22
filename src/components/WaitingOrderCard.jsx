@@ -8,6 +8,11 @@ const WaitingOrderCard = ({ order }) => {
   const [isAccepted, setIsAccepted] = useState(false);
 
   const handleConfirmOrder = () => {
+    if (isAccepted) {
+      toast.error("已接受訂單，不能反悔囉!🤪");
+      return;
+    }
+
     orderService
       .confirmOrder(order.orderId)
       .then((response) => {
@@ -42,8 +47,8 @@ const WaitingOrderCard = ({ order }) => {
         </div>
 
         <button
-          className={`w-full bg-primary text-white py-2 rounded-full mt-4  transition-all duration-300 ${
-            isAccepted ? "bg-gray-500" : "hover:bg-primaryHover"
+          className={`w-full text-white py-2 rounded-full mt-4  transition-all duration-300 ${
+            isAccepted ? "bg-gray-500" : "bg-primary hover:bg-primaryHover"
           }`}
           onClick={handleConfirmOrder}
         >
