@@ -15,7 +15,7 @@ const Store = () => {
     PackageService.getPackageList()
       .then((res) => {
         setPackageCards(res.data.data);
-        toast.success(res.data.message);
+        toast.success("找到您的商品囉!");
       })
       .catch((err) => {
         const message =
@@ -48,19 +48,26 @@ const Store = () => {
   return (
     <section className="w-full">
       <div className="px-28 py-20">
-        <h1 className="text-3xl font-semibold">John的店舖</h1>
+        <h1 className="text-3xl font-semibold">總覽</h1>
 
         <div className="flex flex-col gap-4 mt-10 border border-gray-200 rounded-lg">
           <h2 className="border-b border-gray-200 px-6 pt-6 pb-4 text-2xl font-semibold">
             店鋪販售的商品
           </h2>
 
-          <div className="pb-6 px-6">
-            {packageCards.length === 0 && (
+          <div className="flex flex-wrap gap-4 pb-6 px-6">
+            {packageCards.length > 0 &&
+              packageCards.map((packageCard) => (
+                <PackageCard packageCard={packageCard} />
+              ))}
+
+            {packageCards.length < 3 && (
               <>
                 <div className="border border-gray-200 rounded-md p-4 max-w-[20rem] h-[15rem] flex flex-col items-center justify-center gap-4">
                   <p className="text-gray-500">
-                    還沒有任何商品喔!趕快來新增一個吧!
+                    {packageCards.length === 0
+                      ? "還沒有任何商品喔!趕快來新增一個吧!"
+                      : "還有更多商品可以新增喔!最多三個。"}
                   </p>
                   <button
                     onClick={handleCreatePackage}
@@ -71,11 +78,6 @@ const Store = () => {
                 </div>
               </>
             )}
-
-            {packageCards.length > 0 &&
-              packageCards.map((packageCard) => (
-                <PackageCard packageCard={packageCard} />
-              ))}
           </div>
         </div>
       </div>

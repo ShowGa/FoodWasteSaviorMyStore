@@ -10,10 +10,14 @@ const PackageCard = ({ packageCard }) => {
   return (
     <div
       key={packageCard.id}
-      className="border border-gray-200 rounded-md max-w-[20rem] shadow-sm overflow-hidden"
+      className="border border-gray-200 rounded-md max-w-[20rem] w-full shadow-sm overflow-hidden"
     >
       <div className="w-full h-24">
-        <img src={img1} alt="product" className="w-full h-full object-cover" />
+        <img
+          src={packageCard.packageCoverImageUrl}
+          alt="product"
+          className="w-full h-full object-cover"
+        />
       </div>
       <div className="px-6 py-4 bg-white">
         <h3 className="text-lg font-semibold">{packageCard.packageName}</h3>
