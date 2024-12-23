@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // react-router-dom
 import { useParams } from "react-router-dom";
 // assets
@@ -9,11 +9,18 @@ import { Select, MenuItem } from "@mui/material";
 import toast from "react-hot-toast";
 // service
 import PackageService from "../service/packageService";
+import UploadImgService from "../service/uploadImgService";
 // utils
 import { categoryConvertor } from "../utils/categoryConvertor";
+// icons
+import { FaPen } from "react-icons/fa6";
+import { FaCheck } from "react-icons/fa";
 
 const ProductOverview = () => {
   const { packageId } = useParams();
+
+  // image input ref
+  const imgInputRef = useRef(null);
 
   const [editing, setEditing] = useState(false);
   // Overview => get posted form data from backend
@@ -22,9 +29,42 @@ const ProductOverview = () => {
   // Overview => get form data from backend at first
   const [formData, setFormData] = useState({});
 
+  const [imgFile, setImgFile] = useState(null);
+  const [imgPreview, setImgPreview] = useState(null);
+
+  const [imgChanged, setImgChanged] = useState(false);
+
   // =================== //
   // Helper function
   // =================== //
+
+  // handle change
+  const handleChangeImg = (e) => {
+    setImgFile(e.target.files[0]);
+  };
+
+  // updaload image to cloudinary
+  const handleUploadImg = () => {
+    const fileName = new Date().getTime() + imgFile.name;
+
+    UploadImgService.uploadImg(imgFile, fileName)
+      .then((res) => {
+        const imgUrl = res.data.secure_url;
+        setImgPreview(imgUrl);
+        // update formData
+        setFormData({ ...formData, packageCoverImageUrl: imgUrl });
+        setImgChanged(true);
+        toast.success("變更完成，請記得按下儲存變更!");
+      })
+      .catch((err) => {
+        toast.error("上傳失敗，請稍後再試!");
+        const message =
+          err.response?.data.message ||
+          "糟糕!伺服器似乎出現了問題，請聯絡客服。";
+        console.log(err);
+      });
+  };
+
   const handleGetPackageOverview = async () => {
     PackageService.getPackageOverview(packageId)
       .then((res) => {
@@ -42,7 +82,7 @@ const ProductOverview = () => {
   };
 
   const handleUpdateSubmitFormData = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
 
     if (!checkFormDataIsChanged()) {
       toast.error("請先修改資料");
@@ -102,6 +142,12 @@ const ProductOverview = () => {
     handleGetPackageOverview();
   }, []);
 
+  useEffect(() => {
+    if (imgFile) {
+      handleUploadImg();
+    }
+  }, [imgFile]);
+
   return (
     <div className="flex flex-col gap-4 mt-10 border border-gray-200 rounded-lg">
       <h2 className="border-b border-gray-200 px-6 pt-6 pb-4 text-2xl font-semibold">
@@ -112,12 +158,44 @@ const ProductOverview = () => {
       <div className="flex flex-col gap-8 pb-6 px-6">
         <div className="h-[20rem] relative bg-red-300 mb-[3rem]">
           {/* cover image */}
-          <img src={img1} alt="" className="w-full h-full object-cover" />
+          <img
+            src={imgPreview || postedFormData.packageCoverImageUrl}
+            alt=""
+            className="w-full h-full object-cover"
+          />
+          <input
+            type="file"
+            ref={imgInputRef}
+            onChange={handleChangeImg}
+            hidden
+          />
 
           {/* store logo */}
           <div className="border-2 border-white rounded-full bottom-0 absolute left-[50%] translate-x-[-50%] translate-y-[50%]">
             <img src={img2} alt="" className="w-24 h-24 rounded-full" />
           </div>
+
+          {/* edit button */}
+          {!imgChanged && (
+            <button
+              className={`absolute top-2 right-2 p-3 rounded-full text-secondaryTheme font-bold text-xl bg-secondaryTheme hover:bg-secondaryThemeHover transition-all duration-300`}
+              onClick={() => imgInputRef.current.click()}
+            >
+              <FaPen className="text-white text-2xl" />
+            </button>
+          )}
+
+          {imgChanged && (
+            <button
+              className={`absolute top-2 right-2 p-3 rounded-full text-secondaryTheme font-bold text-xl bg-secondaryTheme hover:bg-secondaryThemeHover transition-all duration-300`}
+              onClick={() => {
+                handleUpdateSubmitFormData();
+                setImgChanged(false);
+              }}
+            >
+              <FaCheck className="text-white text-2xl" />
+            </button>
+          )}
         </div>
 
         {/* edit button */}
