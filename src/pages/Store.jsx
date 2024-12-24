@@ -5,11 +5,52 @@ import PackageCard from "../components/PackageCard";
 import { FaCirclePlus } from "react-icons/fa6";
 // service
 import PackageService from "../service/packageService";
+import StoreService from "../service/storeService";
 // toast
 import toast from "react-hot-toast";
+// image
+import { img2 } from "../assets";
 
 const Store = () => {
   const [packageCards, setPackageCards] = useState([]);
+
+  const [storeInfo, setStoreInfo] = useState({
+    name: "",
+    coverImageUrl: "",
+    logoImageUrl: "",
+    about: "",
+  });
+
+  const handleGetStoreInfo = () => {
+    StoreService.getStoreInfo()
+      .then((res) => {
+        setStoreInfo(res.data.data);
+      })
+      .catch((err) => {
+        const message =
+          err.response?.data.message ||
+          "糟糕!伺服器似乎出現了問題，請聯絡客服。";
+        toast.error(message);
+        console.log(err);
+      });
+  };
+
+  const handleUpdateStoreInfo = (e) => {
+    e.preventDefault();
+
+    StoreService.updateStoreInfo(storeInfo)
+      .then((res) => {
+        toast.success("更新成功");
+        setStoreInfo(res.data.data);
+      })
+      .catch((err) => {
+        const message =
+          err.response?.data.message ||
+          "糟糕!伺服器似乎出現了問題，請聯絡客服。";
+        toast.error(message);
+        console.log(err);
+      });
+  };
 
   const handleGetPackageList = () => {
     PackageService.getPackageList()
@@ -41,8 +82,14 @@ const Store = () => {
       });
   };
 
+  const handleChangeInput = (e) => {
+    const { name, value } = e.target;
+    setStoreInfo({ ...storeInfo, [name]: value });
+  };
+
   useEffect(() => {
     handleGetPackageList();
+    handleGetStoreInfo();
   }, []);
 
   return (
@@ -87,7 +134,56 @@ const Store = () => {
             店家資訊
           </h2>
 
-          <div className="flex flex-wrap gap-4 pb-6 px-6"></div>
+          <div className="flex flex-col flex-wrap gap-4 pb-6 px-6">
+            <div className="h-[20rem] relative bg-red-300 mb-[3rem]">
+              {/* cover image */}
+              <img
+                src={storeInfo.coverImageUrl}
+                alt=""
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <form className="flex flex-col items-center gap-4">
+              {/* store logo */}
+              <div className="">
+                <img
+                  src={storeInfo.logoImageUrl}
+                  alt=""
+                  className="w-24 h-24 rounded-full"
+                />
+              </div>
+
+              <div className="max-w-[30rem] w-full">
+                <p className=" text-gray-500">店家名稱</p>
+                <input
+                  type="text"
+                  name="name"
+                  onChange={handleChangeInput}
+                  value={storeInfo.name}
+                  className=" w-full border border-gray-400 rounded-md p-2 "
+                />
+              </div>
+
+              <div className="max-w-[30rem] w-full">
+                <p className=" text-gray-500">關於我們</p>
+                <textarea
+                  name="about"
+                  value={storeInfo.about}
+                  onChange={handleChangeInput}
+                  className=" w-full min-h-[10rem] border border-gray-400 rounded-md p-2 resize-none"
+                  rows={9}
+                />
+              </div>
+
+              <button
+                className="bg-secondaryTheme text-white px-4 py-2 rounded-md"
+                onClick={(e) => handleUpdateStoreInfo(e)}
+              >
+                更新
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </section>
