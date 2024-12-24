@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // components
 import PackageCard from "../components/PackageCard";
 // react icons
@@ -6,12 +6,14 @@ import { FaCirclePlus } from "react-icons/fa6";
 // service
 import PackageService from "../service/packageService";
 import StoreService from "../service/storeService";
+import UploadImgService from "../service/uploadImgService";
 // toast
 import toast from "react-hot-toast";
-// image
-import { img2 } from "../assets";
 
 const Store = () => {
+  const coverImgInputRef = useRef(null);
+  const logoImgInputRef = useRef(null);
+
   const [packageCards, setPackageCards] = useState([]);
 
   const [storeInfo, setStoreInfo] = useState({
@@ -20,6 +22,30 @@ const Store = () => {
     logoImageUrl: "",
     about: "",
   });
+
+  const handleImageChange = (e) => {
+    const targetName = e.target.name;
+
+    const targetImgFile = e.target.files[0];
+    const targetFileName = new Date().getTime() + targetImgFile.name;
+
+    UploadImgService.uploadImg(targetImgFile, targetFileName)
+      .then((res) => {
+        const uploadedImgUrl = res.data.secure_url;
+
+        if (targetName === "coverImageUrlUpload") {
+          setStoreInfo({ ...storeInfo, coverImageUrl: uploadedImgUrl });
+        } else if (targetName === "logoImageUrlUpload") {
+          setStoreInfo({ ...storeInfo, logoImageUrl: uploadedImgUrl });
+        }
+
+        toast.success("上傳圖片成功，請記得按更新按鈕!");
+      })
+      .catch((err) => {
+        toast.error("上傳圖片失敗，請稍後再試!");
+        console.log(err);
+      });
+  };
 
   const handleGetStoreInfo = () => {
     StoreService.getStoreInfo()
@@ -140,17 +166,35 @@ const Store = () => {
               <img
                 src={storeInfo.coverImageUrl}
                 alt=""
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover cursor-pointer"
+                onClick={() => coverImgInputRef.current.click()}
+              />
+
+              <input
+                name="coverImageUrlUpload"
+                type="file"
+                ref={coverImgInputRef}
+                onChange={handleImageChange}
+                hidden
               />
             </div>
 
             <form className="flex flex-col items-center gap-4">
               {/* store logo */}
-              <div className="">
+              <div className="w-[7rem] h-[7rem]">
                 <img
                   src={storeInfo.logoImageUrl}
                   alt=""
-                  className="w-24 h-24 rounded-full"
+                  className="w-full h-full rounded-full cursor-pointer"
+                  onClick={() => logoImgInputRef.current.click()}
+                />
+
+                <input
+                  name="logoImageUrlUpload"
+                  type="file"
+                  ref={logoImgInputRef}
+                  onChange={handleImageChange}
+                  hidden
                 />
               </div>
 
