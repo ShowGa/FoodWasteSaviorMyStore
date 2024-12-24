@@ -80,6 +80,15 @@ const Store = () => {
             )}
           </div>
         </div>
+
+        {/* Store information */}
+        <div className="flex flex-col gap-4 mt-10 border border-gray-200 rounded-lg">
+          <h2 className="border-b border-gray-200 px-6 pt-6 pb-4 text-2xl font-semibold">
+            店家資訊
+          </h2>
+
+          <div className="flex flex-wrap gap-4 pb-6 px-6"></div>
+        </div>
       </div>
     </section>
   );
