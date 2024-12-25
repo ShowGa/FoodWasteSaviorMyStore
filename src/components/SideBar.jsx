@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // react router dom
 import { Link } from "react-router-dom";
 // assets
-import { img1 } from "../assets";
+import { Logobg } from "../assets";
 // components
 import SideBarItem from "./SideBarItem";
 import SideBarLogoutButton from "./SideBarLogoutButton";
@@ -42,7 +42,7 @@ const SideBar = () => {
     <div className="border-r-2 border-gray-200 px-2 w-[18rem] relative">
       <div className="sticky top-0 min-h-screen">
         <div className="flex justify-center items-center py-10">
-          <img src={img1} alt="logo" className="w-14 h-14 rounded-full" />
+          <img src={Logobg} alt="logo" className="w-16 h-16" />
         </div>
 
         <div className="flex flex-col gap-6">

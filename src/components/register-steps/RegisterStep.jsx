@@ -29,6 +29,15 @@ const RegisterStep = () => {
             <span>使用 Apple 註冊</span>
           </button>
         </div>
+
+        <div className="flex flex-col gap-1 mt-4 text-sm">
+          <div>
+            <span>已經有帳號了嗎？</span>
+            <Link className="text-blue-500 hover:underline" to="/mystore-login">
+              登入帳號
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );
