@@ -49,3 +49,36 @@
   transform: translate(-50%, -50%) scale(150%);
   background-color: rgba(247, 0, 0, 0.3);
 }
+
+/* ========= Header ========= */
+.c-header2 {
+  /* position: sticky; */
+
+  z-index: 50;
+}
+
+.c-header2-nav_item {
+  /* border rounded-full border-gray-300 px-4 py-2 */
+  border-radius: 100px;
+  border: 1px solid #ccc;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* ========= Introduction ========= */
+.c-introduction-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1.25rem;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  flex: 0 1 25rem;
+}

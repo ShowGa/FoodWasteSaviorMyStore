@@ -8,6 +8,7 @@ import Orders from "./pages/Orders";
 import OrderDetail from "./pages/OrderDetail";
 import Product from "./pages/Product";
 import PendingOrders from "./pages/PendingOrders";
+import Home from "./pages/Home";
 // layouts
 import Layout from "./layouts/Layout";
 // react-hot-toast
@@ -17,6 +18,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route index element={<Home />} />
+
         <Route path="store/:storeId" element={<Layout />}>
           <Route path="dashboard" element={<Store />} />
           <Route path="orders" element={<Orders />} />

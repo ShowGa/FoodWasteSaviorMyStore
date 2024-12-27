@@ -4,5 +4,6 @@ import img3 from "./images/3.jpg";
 import Logobg from "./images/Logobg.png";
 import coverimg from "./images/coverimg.jpg";
 import coverimg2 from "./images/coverimg2.jpg";
+import heroFood from "./images/heroFood.png";
 
-export { img1, img2, img3, Logobg, coverimg, coverimg2 };
+export { img1, img2, img3, Logobg, coverimg, coverimg2, heroFood };
