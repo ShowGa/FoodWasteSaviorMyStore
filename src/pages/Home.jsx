@@ -5,7 +5,7 @@ import { Logobg } from "../assets";
 import { RiSearchLine } from "react-icons/ri";
 import { FaShoppingCart, FaHeart, FaUserCircle } from "react-icons/fa";
 // motion
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 // constants
 import { instructionContent } from "../constants/instructionContent";
 import introductionContent from "../constants/introductionContent";
