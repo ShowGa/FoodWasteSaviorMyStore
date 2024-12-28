@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 // zustand
 import useAuthStore from "../zustand/useAuthStore";
 // images
-import { coverimg2, Logobg } from "../assets";
+import { coverimg2, logo15ms } from "../assets";
 // components
 import Step2 from "../components/register-steps/Step2";
 import Step3 from "../components/register-steps/Step3";
@@ -42,7 +42,7 @@ const Register = () => {
     <main>
       {/* logo */}
       <div className="absolute top-5 right-10 z-50">
-        <img src={Logobg} alt="logo" className="w-16 h-16" />
+        <img src={logo15ms} alt="logo" className="w-16 h-16 -scale-x-100" />
       </div>
 
       <div className="flex h-screen">

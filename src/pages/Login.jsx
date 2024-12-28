@@ -4,7 +4,7 @@ import { Link, Navigate } from "react-router-dom";
 // zustand
 import useAuthStore from "../zustand/useAuthStore";
 // assets
-import { Logobg, coverimg } from "../assets";
+import { Logobg, coverimg, logo15ms } from "../assets";
 // icons
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoApple } from "react-icons/io";
@@ -24,7 +24,7 @@ const Login = () => {
     <div>
       {/* logo */}
       <div className="absolute top-5 right-10 z-50">
-        <img src={Logobg} alt="logo" className="w-16 h-16" />
+        <img src={logo15ms} alt="logo" className="w-16 h-16 -scale-x-100" />
       </div>
 
       <div className="flex h-screen">
