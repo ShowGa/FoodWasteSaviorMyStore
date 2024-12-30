@@ -7,6 +7,8 @@ import TextField from "@mui/material/TextField";
 import toast from "react-hot-toast";
 // service
 import PackageService from "../service/packageService";
+// components
+import MaskTimeInput from "./MaskTimeInput";
 
 const textFieldStyle = {
   "& .MuiOutlinedInput-root": {
@@ -88,11 +90,21 @@ const ProductScheduleFilter = ({ weekday, schedule, setPostedSchedules }) => {
     } else if (e.target.name === "quantity") {
       setFormData({ ...formData, quantity: parseInt(e.target.value) });
     } else {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
+      // 23:59:59
+      const { name, value } = e.target;
+
+      // 驗證輸入值是否合法
+      const [hours, minutes, seconds] = value.split(":").map(Number);
+      if (hours > 23 || minutes > 59 || seconds > 59) {
+        return; // 不更新狀態
+      }
+      setFormData({ ...formData, [name]: value });
     }
 
     setIsChanged(true);
   };
+
+  console.log(formData);
 
   return (
     <div>
@@ -130,21 +142,33 @@ const ProductScheduleFilter = ({ weekday, schedule, setPostedSchedules }) => {
         </div>
 
         <div className="flex items-center gap-2">
-          <TextField
+          {/* <TextField
             label="商品領取開始時間"
             variant="outlined"
             name="pickupStartTime"
             value={formData.pickupStartTime}
             sx={textFieldStyle}
             onChange={handleFormDataChange}
+          /> */}
+          <MaskTimeInput
+            label="商品領取開始時間"
+            name="pickupStartTime"
+            value={formData.pickupStartTime}
+            onChange={handleFormDataChange}
           />
           <span> ~ </span>
-          <TextField
+          {/* <TextField
             label="商品領取結束時間"
             variant="outlined"
             name="pickupEndTime"
             value={formData.pickupEndTime}
             sx={textFieldStyle}
+            onChange={handleFormDataChange}
+          /> */}
+          <MaskTimeInput
+            label="商品領取結束時間"
+            name="pickupEndTime"
+            value={formData.pickupEndTime}
             onChange={handleFormDataChange}
           />
         </div>
