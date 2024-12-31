@@ -35,7 +35,7 @@ const Orders = () => {
             顧客訂單資訊
           </h2>
 
-          <div className="flex flex-wrap gap-4 pb-6 px-6">
+          <div className="flex flex-wrap gap-4 pb-6 px-6 min-h-[10rem]">
             {confirmedOrderList.length > 0 ? (
               confirmedOrderList.map((order) => (
                 <OrdersListCard key={order.id} order={order} />

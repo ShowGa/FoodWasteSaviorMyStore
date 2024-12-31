@@ -39,10 +39,15 @@ const PendingOrders = () => {
             今日待確認訂單
           </h2>
 
-          <div className="flex flex-wrap gap-4 pb-6 px-6">
+          <div className="flex flex-wrap gap-4 pb-6 px-6 min-h-[10rem]">
             {waitingOrderList?.map((order) => (
               <WaitingOrderCard key={order.id} order={order} />
             ))}
+            {waitingOrderList.length === 0 && (
+              <div className="w-full h-full flex justify-center">
+                <p className="text-gray-500">目前沒有待確認訂單</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
