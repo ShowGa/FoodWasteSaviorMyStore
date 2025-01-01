@@ -171,9 +171,9 @@ const ProductOverview = () => {
           />
 
           {/* store logo */}
-          <div className="border-2 border-white rounded-full bottom-0 absolute left-[50%] translate-x-[-50%] translate-y-[50%]">
+          {/* <div className="border-2 border-white rounded-full bottom-0 absolute left-[50%] translate-x-[-50%] translate-y-[50%]">
             <img src={img2} alt="" className="w-24 h-24 rounded-full" />
-          </div>
+          </div> */}
 
           {/* edit button */}
           {!imgChanged && (
