@@ -12,6 +12,23 @@ import { IoLogoApple } from "react-icons/io";
 import "../pages/css/pageCss.css";
 // components
 import GoogleOAuthLogin from "../components/GoogleOAuthLogin";
+// MUI
+import { TextField, Button } from "@mui/material";
+
+const customButton = {
+  backgroundColor: "rgb(230, 153, 0)",
+};
+
+const customTextField = {
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused fieldset": {
+      borderColor: "rgb(230, 153, 0)",
+    },
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: "rgb(230, 153, 0)",
+  },
+};
 
 const Login = () => {
   // check if user is logged in
@@ -41,13 +58,6 @@ const Login = () => {
             <h2 className="text-3xl font-extrabold">商店登入</h2>
             <span className="text-sm text-gray-400">使用 OAuth 登入</span>
 
-            {/* Divider */}
-            <div className="p-divider">
-              <div className="p-divider_line"></div>
-              <span>OAuth</span>
-              <div className="p-divider_line"></div>
-            </div>
-
             {/* OAuth */}
             <div className="flex flex-col gap-4">
               <GoogleOAuthLogin />
@@ -56,6 +66,26 @@ const Login = () => {
                 <span>使用 Apple 登入</span>
               </button>
             </div>
+
+            {/* Divider */}
+            <div className="p-divider">
+              <div className="p-divider_line"></div>
+              <span>或</span>
+              <div className="p-divider_line"></div>
+            </div>
+
+            {/* Form */}
+            <form className="flex flex-col gap-4">
+              <TextField label="Email" type="email" sx={customTextField} />
+              <TextField
+                label="Password"
+                type="password"
+                sx={customTextField}
+              />
+              <Button variant="contained" sx={customButton}>
+                登入
+              </Button>
+            </form>
 
             {/* Forgot Password & Create an Account */}
             <div className="flex flex-col gap-1 mt-4 text-sm">
